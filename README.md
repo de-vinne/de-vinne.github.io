@@ -1,2 +1,1 @@
-# academy.github.io
-Academy is a forum of freedom where you can share what you think.
+This is [my](https://github.com/de-vinne) personal blog.
