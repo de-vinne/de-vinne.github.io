@@ -1,0 +1,216 @@
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap');
+
+body {
+    min-height: 100dvh;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 100px 1fr;
+    gap: 1px;
+    background-color: #cccccc;
+}
+
+.header {
+    height: 100px;
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    background-color: #ffffff;
+}
+
+.header .top {
+    padding: 8px 16px;
+    display: grid;
+    grid-template-columns: 250px 1fr 250px;
+    align-items: center;
+    gap: 16px;
+}
+
+.header .top .search-box {
+    position: relative;
+    width: 100%;
+    max-width: 720px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 16px;
+    background-color: #f0f4f9;
+    border-radius: 28px;
+    box-sizing: border-box;
+}
+
+.search-box input {
+    width: 100%;
+    min-width: 0;
+    border: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    background-color: transparent;
+    margin: 0;
+}
+
+.search-box input:focus {
+    outline: none;
+}
+
+.header .top .branding {
+    font-family: 'Baskervville', serif;
+    font-size: 32px;
+    font-weight: 400;
+    user-select: none;
+}
+
+.header .top .search-box input {
+    font-family: 'Google Sans Text', sans-serif;
+    font-size: 16px;
+}
+
+.header .top .search-box .search-icon {
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    fill: #5f6368;
+}
+
+.header .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 24px;
+}
+
+.main {
+    background-color: #ffffff;
+    
+}
+
+.article-feed {
+    width: min(1122px, calc(100% - 32px));
+    margin: 0 auto;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.article-feed .article-list__title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 16px;
+}
+
+.article-feed .article-list__feed {
+    padding: 0;
+    display: grid;
+    grid-gap: 24px;
+    column-gap: 24px;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.article-list__item {
+    width: 100%;
+    max-width: 350px;
+    height: 150px;
+    padding: 0;
+    border: 1px solid #c0c0c0;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: #ffffff;
+    transition: background-color 0.2s ease;
+}
+
+.article-list__item .text {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 8px 16px;
+}
+
+.article-list__item .text .date {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 14px;
+    color: #666666;
+}
+
+.article-list__item .text .title {
+    font-family: 'Google Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.article-list__item .image {
+    width: 50%;
+    height: 100%;
+}
+
+.article-list__item:hover {
+    background-color: #f7f7f7;
+    border-color: #d0d0d0;
+}
+
+.article-list__item:hover .text .title {
+    text-decoration: underline;
+}
+
+.article-list__item:active {
+    background-color: #f0f0f0;
+    border-color: #e0e0e0;
+}
+
+@media (max-width: 900px) {
+    body {
+        grid-template-rows: auto 1fr;
+    }
+
+    .header {
+        height: auto;
+    }
+
+    .header .top {
+        grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .header .top .action {
+        display: none;
+    }
+
+    .article-feed .article-list__feed {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .header .top {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+
+    .header .top .branding {
+        font-size: 24px;
+        justify-self: center;
+    }
+
+    .header .nav {
+        padding: 12px 16px 16px;
+        justify-content: flex-start;
+        overflow-x: auto;
+    }
+
+    .article-feed {
+        width: calc(100% - 24px);
+    }
+
+    .article-feed .article-list__feed {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .article-list__item {
+        max-width: none;
+    }
+}
