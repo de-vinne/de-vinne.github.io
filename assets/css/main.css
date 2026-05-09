@@ -1,20 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,slnt,wdth,wght,GRAD,ROND@6..144,-10..0,25..151,1..1000,0..100,0..100&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital,wght@0,400..700;1,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&display=swap');
 
 body {
     min-height: 100dvh;
     margin: 0;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 100px 1fr;
+    grid-template-rows: auto 1fr;
     gap: 1px;
     background-color: #cccccc;
 }
 
 .header {
-    height: 100px;
-    display: grid;
-    grid-template-rows: 1fr 1fr;
+    --header-top-height: 50px;
+    --header-nav-height: 50px;
+    --top-collapse: 0px;
+    --top-content-opacity: 1;
+    --top-content-scale: 1;
+    height: calc(var(--header-top-height) + var(--header-nav-height) - var(--top-collapse));
     background-color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    overflow: hidden;
+    transition: height 0.2s ease;
+}
+
+.header.header--nav-only {
+    --top-collapse: var(--header-top-height);
+    --top-content-opacity: 0;
+    --top-content-scale: 0.72;
 }
 
 .header .top {
@@ -23,6 +39,33 @@ body {
     grid-template-columns: 250px 1fr 250px;
     align-items: center;
     gap: 16px;
+    margin-top: calc(var(--top-collapse) * -1);
+    transition: margin-top 0.2s ease;
+}
+
+.header .top .search-toggle {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 999px;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.header .top .search-toggle__icon {
+    width: 20px;
+    height: 20px;
+    fill: #5f6368;
+}
+
+.header .top > * {
+    opacity: var(--top-content-opacity);
+    transform: scale(var(--top-content-scale));
+    transform-origin: center top;
+    transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
 .header .top .search-box {
@@ -54,7 +97,7 @@ body {
 }
 
 .header .top .branding {
-    font-family: 'Baskervville', serif;
+    font-family: 'Cormorant Garamond', serif;
     font-size: 32px;
     font-weight: 400;
     user-select: none;
@@ -72,11 +115,29 @@ body {
     fill: #5f6368;
 }
 
+.header .top .search-box .back-icon {
+    display: none;
+    width: 20px;
+    height: 20px;
+    flex: 0 0 20px;
+    fill: #5f6368;
+    cursor: pointer;
+}
+
 .header .nav {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 24px;
+    min-height: 40px;
+}
+
+.header .nav .nav__link {
+    font-family: 'Google Sans Flex';
+    font-size: 18px;
+    font-variation-settings: "ROND" 30;
+    color: #606060;
+    text-decoration: none;
 }
 
 .main {
@@ -168,7 +229,7 @@ body {
     }
 
     .header {
-        height: auto;
+        height: calc(var(--header-top-height) + var(--header-nav-height) - var(--top-collapse));
     }
 
     .header .top {
@@ -186,18 +247,48 @@ body {
 
 @media (max-width: 640px) {
     .header .top {
-        grid-template-columns: 1fr;
+        grid-template-columns: auto 1fr;
         gap: 4px;
+        align-items: center;
     }
 
     .header .top .branding {
         font-size: 24px;
-        justify-self: center;
+        justify-self: start;
+    }
+
+    .header .top .search-toggle {
+        display: inline-flex;
+        justify-self: end;
+    }
+
+    .header .top .search {
+        display: none;
+        grid-column: 1 / -1;
+    }
+
+    .header .top.search-open .search {
+        display: block;
+    }
+
+    .header .top.search-open {
+        grid-template-columns: 1fr;
+    }
+
+    .header .top.search-open .search-toggle,
+    .header .top.search-open .branding {
+        display: none;
+    }
+
+    .header .top.search-open .search-box .search-icon {
+        display: none;
+    }
+
+    .header .top.search-open .search-box .back-icon {
+        display: block;
     }
 
     .header .nav {
-        padding: 12px 16px 16px;
-        justify-content: flex-start;
         overflow-x: auto;
     }
 
