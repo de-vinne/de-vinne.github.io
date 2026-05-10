@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="De Vinne — your curated source for the latest technology news, features and stories.">
         <title>De Vinne</title>
+        <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
         <link rel="stylesheet" href="assets/css/main.css">
-        <script src="assets/js/main.js"></script>
+        <script src="assets/js/main.js" defer></script>
         <script type="importmap">
             {
                 "imports": {
@@ -13,6 +15,14 @@
                 }
             }
         </script>
+        <style>
+            :root {
+                --md-sys-color-primary: #1a73e8;
+                --md-sys-color-on-primary: #ffffff;
+                --md-sys-color-primary-container: #d3e3fd;
+                --md-sys-color-on-primary-container: #041e49;
+            }
+        </style>
         <script type="module">
             import '@material/web/all.js';
             import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
@@ -21,71 +31,156 @@
         </script>
     </head>
     <body>
-        <div class="header">
+        <header class="header" role="banner">
             <div class="top">
-                <div class="branding">
+                <a class="branding" aria-label="De Vinne home">
                     De Vinne
+                </a>
+                <div class="action">
+                    <button class="search-toggle" id="search-toggle-btn" type="button" aria-label="Open search" aria-expanded="false">
+                        <svg class="search-toggle__icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+                    </button>
+                    <form class="search" role="search" aria-label="Site search">
+                        <div class="search-box">
+                            <svg class="search-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
+                            <svg class="back-icon" focusable="false" aria-hidden="true" role="button" tabindex="0" viewBox="0 0 24 24" aria-label="Close search"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+                            <input class="search-input" id="search-input" type="search" aria-label="Search" placeholder="Search for topics, locations &amp; sources" autocomplete="off">
+                            <button type="button" class="search-narrow-toggle" id="search-narrow-toggle" aria-expanded="false" aria-haspopup="true" aria-controls="search-narrow-panel" title="Narrow search">
+                                <svg class="search-narrow-toggle__icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+                            </button>
+                        </div>
+                        <div class="search-narrow-panel" id="search-narrow-panel" role="region" aria-labelledby="search-narrow-heading" hidden>
+                            <p class="search-narrow-panel__heading" id="search-narrow-heading">Narrow your search results</p>
+                            <ul class="search-narrow-panel__list">
+                                <li class="search-narrow-panel__item">
+                                    <label class="search-narrow-panel__label"><input type="checkbox" name="narrow-topics" class="search-narrow-panel__check"> Topics</label>
+                                </li>
+                                <li class="search-narrow-panel__item">
+                                    <label class="search-narrow-panel__label"><input type="checkbox" name="narrow-locations" class="search-narrow-panel__check"> Locations</label>
+                                </li>
+                                <li class="search-narrow-panel__item">
+                                    <label class="search-narrow-panel__label"><input type="checkbox" name="narrow-sources" class="search-narrow-panel__check"> Sources</label>
+                                </li>
+                            </ul>
+                        </div>
+                    </form>
+                    <button class="subscribe-toggle" id="subscribe-btn" type="button" aria-label="Subscribe" aria-haspopup="dialog">
+                        <svg class="subscribe-toggle__icon" focusable="false" aria-hidden="true" viewBox="0 -960 960 960"><path d="M160-80q-33 0-56.5-23.5T80-160v-400q0-33 23.5-56.5T160-640h640q33 0 56.5 23.5T880-560v400q0 33-23.5 56.5T800-80H160Zm0-80h640v-400H160v400Zm240-40 240-160-240-160v320ZM160-680v-80h640v80H160Zm120-120v-80h400v80H280ZM160-160v-400 400Z"/></svg>
+                    </button>
                 </div>
-                <button class="search-toggle" type="button" aria-label="Open search">
-                    <svg class="search-toggle__icon" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
-                </button>
-                <form class="search" role="search">
-                    <div class="search-box">
-                        <svg class="search-icon" focusable="false" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
-                        <svg class="back-icon" focusable="false" viewBox="0 0 24 24"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                        <input class="search-input" type="search" aria-label="Search" placeholder="Search for topics, locations &amp; sources">
-                        <svg class="search-icon search-icon--end" focusable="false" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"></path></svg>
+            </div>
+
+            <!-- Subscribe dialog -->
+            <div class="subscribe-overlay" id="subscribe-overlay" role="dialog" aria-modal="true" aria-labelledby="subscribe-title" aria-hidden="true">
+                <div class="subscribe-modal">
+                    <!-- Step 1: Email Entry -->
+                    <div class="subscribe-step" id="step-email">
+                        <h2 class="subscribe-modal__title" id="subscribe-title">Subscribe to <span class="branding">De Vinne</span></h2>
+                        <p class="subscribe-modal__subtitle">Get the latest stories delivered straight to your inbox.</p>
+                        <md-outlined-text-field
+                            id="subscribe-email"
+                            label="Email address"
+                            type="email"
+                            class="subscribe-modal__input"
+                            required
+                        ></md-outlined-text-field>
+                        <div class="subscribe-modal__actions">
+                            <md-text-button id="subscribe-cancel">Cancel</md-text-button>
+                            <md-filled-button id="subscribe-submit">Subscribe</md-filled-button>
+                        </div>
                     </div>
-                </form>
-                <div class="action"></div>
+
+                    <!-- Step 2: Verification Code -->
+                    <div class="subscribe-step hidden" id="step-verify">
+                        <h2 class="subscribe-modal__title">Verify your email</h2>
+                        <p class="subscribe-modal__subtitle">We've sent a 6-digit code to <strong id="display-email"></strong>. Please enter it below.</p>
+                        <md-outlined-text-field
+                            id="verify-code"
+                            label="Verification code"
+                            type="text"
+                            class="subscribe-modal__input"
+                            inputmode="numeric"
+                            maxlength="6"
+                            placeholder="123456"
+                            required
+                        ></md-outlined-text-field>
+                        <div class="subscribe-modal__actions">
+                            <md-text-button id="verify-back">Back</md-text-button>
+                            <md-filled-button id="verify-submit">Verify</md-filled-button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Success -->
+                    <div class="subscribe-step hidden" id="step-success">
+                        <div class="success-icon">
+                            <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg>
+                        </div>
+                        <h2 class="subscribe-modal__title">You're all set!</h2>
+                        <p class="subscribe-modal__subtitle">Thank you for subscribing. You'll start receiving our curated stories soon.</p>
+                        <div class="subscribe-modal__actions">
+                            <md-filled-button id="success-close">Done</md-filled-button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="nav">
-                <a href="#" class="nav__link">Home</a>
-                <a href="#" class="nav__link">About</a>
-                <a href="#" class="nav__link">Contact</a>
-            </div>
-        </div>
-        <div class="main">
-            <section id="latest" class="article-feed">
+
+            <nav class="nav" aria-label="Primary navigation">
+                <a href="#" class="nav__link" id="nav-home">Home</a>
+                <a href="#" class="nav__link" id="nav-about">About</a>
+                <a href="#" class="nav__link" id="nav-contact">Contact</a>
+            </nav>
+        </header>
+        <main class="main">
+            <section id="latest" class="article-feed" aria-label="Latest articles">
                 <h2 class="article-list__title">The latest</h2>
                 <ul class="article-list__feed">
                     <li class="article-list__item">
-                        <div class="text">
-                            <p class="date">June 6, 2024</p>
-                            <p class="title">5 new features for Android XR</p>
-                        </div>
-                        <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR">
+                        <a href="#" class="article-list__link">
+                            <div class="text">
+                                <p class="date"><time datetime="2024-06-06">June 6, 2024</time></p>
+                                <p class="title">5 new features for Android XR</p>
+                            </div>
+                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR features illustration" loading="lazy" width="300" height="300">
+                        </a>
                     </li>
                     <li class="article-list__item">
-                        <div class="text">
-                            <p class="date">June 6, 2024</p>
-                            <p class="title">5 new features for Android XR</p>
-                        </div>
-                        <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR">
+                        <a href="#" class="article-list__link">
+                            <div class="text">
+                                <p class="date"><time datetime="2024-06-06">June 6, 2024</time></p>
+                                <p class="title">5 new features for Android XR</p>
+                            </div>
+                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR features illustration" loading="lazy" width="300" height="300">
+                        </a>
                     </li>
                     <li class="article-list__item">
-                        <div class="text">
-                            <p class="date">June 6, 2024</p>
-                            <p class="title">5 new features for Android XR</p>
-                        </div>
-                        <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR">
+                        <a href="#" class="article-list__link">
+                            <div class="text">
+                                <p class="date"><time datetime="2024-06-06">June 6, 2024</time></p>
+                                <p class="title">5 new features for Android XR</p>
+                            </div>
+                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR features illustration" loading="lazy" width="300" height="300">
+                        </a>
                     </li>
                     <li class="article-list__item">
-                        <div class="text">
-                            <p class="date">June 5, 2024</p>
-                            <p class="title">3 new Gemini features are coming to Google TV</p>
-                        </div>
-                        <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/updated_blog_hero_image__1.max-300x300.format-webp.webp" alt="Gemini TV">
+                        <a href="#" class="article-list__link">
+                            <div class="text">
+                                <p class="date"><time datetime="2024-06-05">June 5, 2024</time></p>
+                                <p class="title">3 new Gemini features are coming to Google TV</p>
+                            </div>
+                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/updated_blog_hero_image__1.max-300x300.format-webp.webp" alt="Gemini features on Google TV" loading="lazy" width="300" height="300">
+                        </a>
                     </li>
                     <li class="article-list__item">
-                        <div class="text">
-                            <p class="date">June 4, 2024</p>
-                            <p class="title">Connecting your car beyond the dashboard</p>
-                        </div>
-                        <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Open_sourcAndOS_01_exp_HERO_Her.max-300x300.format-webp.webp" alt="Car Connection">
+                        <a href="#" class="article-list__link">
+                            <div class="text">
+                                <p class="date"><time datetime="2024-06-04">June 4, 2024</time></p>
+                                <p class="title">Connecting your car beyond the dashboard</p>
+                            </div>
+                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Open_sourcAndOS_01_exp_HERO_Her.max-300x300.format-webp.webp" alt="Connected car technology" loading="lazy" width="300" height="300">
+                        </a>
                     </li>
                 </ul>
             </section>
-        </div>
+        </main>
     </body>
 </html>
