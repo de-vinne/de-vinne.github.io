@@ -9,6 +9,7 @@
 *::before,
 *::after {
     box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
@@ -63,7 +64,7 @@ body {
 .header .top {
     width: min(1122px, 100%);
     margin: 0;
-    padding: 8px 12px;
+    padding: 10px;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -175,7 +176,7 @@ body {
 }
 
 .header .top .branding {
-    font-size: 32px;
+    font-size: 36px;
     text-decoration: none;
 }
 
@@ -361,7 +362,7 @@ body {
 }
 
 .article-feed .article-list__title {
-    font-family: 'Google Sans', sans-serif;
+    font-family: 'Google Sans Flex', sans-serif;
     font-size: 24px;
     font-weight: 400;
     margin-bottom: 16px;
@@ -411,13 +412,13 @@ body {
 }
 
 .article-list__item .text .date {
-    font-family: 'Google Sans', sans-serif;
+    font-family: 'Google Sans Flex', sans-serif;
     font-size: 14px;
     color: #666666;
 }
 
 .article-list__item .text .title {
-    font-family: 'Google Sans', sans-serif;
+    font-family: 'Google Sans Flex', sans-serif;
     font-size: 16px;
     font-weight: 400;
 }
@@ -630,6 +631,12 @@ body {
     gap: 8px;
     margin-top: 24px;
 }
+
+.subscribe-modal__actions md-filled-button {
+    --md-filled-button-leading-space: 16px;
+    --md-filled-button-trailing-space: 16px;
+}
+
 .subscribe-step.hidden {
     display: none;
 }
