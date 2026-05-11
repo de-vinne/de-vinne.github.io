@@ -17,7 +17,7 @@
         </script>
         <style>
             :root {
-                --md-sys-color-primary: #1a73e8;
+                --md-sys-color-primary: #000000;
                 --md-sys-color-on-primary: #ffffff;
                 --md-sys-color-primary-container: #d3e3fd;
                 --md-sys-color-on-primary-container: #041e49;
@@ -33,7 +33,7 @@
     <body>
         <header class="header" role="banner">
             <div class="top">
-                <a class="branding" aria-label="De Vinne home">
+                <a class="branding" aria-label="De Vinne home" translate="no" href="">
                     De Vinne
                 </a>
                 <div class="action">
@@ -125,61 +125,15 @@
             </div>
 
             <nav class="nav" aria-label="Primary navigation">
-                <a href="#" class="nav__link" id="nav-home">Home</a>
-                <a href="#" class="nav__link" id="nav-about">About</a>
-                <a href="#" class="nav__link" id="nav-contact">Contact</a>
+                <a href="#recommended" class="nav__link is-active" id="nav-recommended" data-category="recommended" aria-current="page">Recommended</a>
+                <a href="#trending" class="nav__link" id="nav-trending" data-category="trending">Trending</a>
+                <a href="#latest" class="nav__link" id="nav-latest" data-category="latest">Latest</a>
             </nav>
         </header>
         <main class="main">
-            <section id="latest" class="article-feed" aria-label="Latest articles">
-                <h2 class="article-list__title">The latest</h2>
-                <ul class="article-list__feed">
-                    <li class="article-list__item">
-                        <a href="#" class="article-list__link">
-                            <div class="text">
-                                <p class="date"><time datetime="2024-06-06">June 6, 2024</time></p>
-                                <p class="title">5 new features for Android XR</p>
-                            </div>
-                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR features illustration" loading="lazy" width="300" height="300">
-                        </a>
-                    </li>
-                    <li class="article-list__item">
-                        <a href="#" class="article-list__link">
-                            <div class="text">
-                                <p class="date"><time datetime="2024-06-06">June 6, 2024</time></p>
-                                <p class="title">5 new features for Android XR</p>
-                            </div>
-                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR features illustration" loading="lazy" width="300" height="300">
-                        </a>
-                    </li>
-                    <li class="article-list__item">
-                        <a href="#" class="article-list__link">
-                            <div class="text">
-                                <p class="date"><time datetime="2024-06-06">June 6, 2024</time></p>
-                                <p class="title">5 new features for Android XR</p>
-                            </div>
-                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp" alt="Android XR features illustration" loading="lazy" width="300" height="300">
-                        </a>
-                    </li>
-                    <li class="article-list__item">
-                        <a href="#" class="article-list__link">
-                            <div class="text">
-                                <p class="date"><time datetime="2024-06-05">June 5, 2024</time></p>
-                                <p class="title">3 new Gemini features are coming to Google TV</p>
-                            </div>
-                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/updated_blog_hero_image__1.max-300x300.format-webp.webp" alt="Gemini features on Google TV" loading="lazy" width="300" height="300">
-                        </a>
-                    </li>
-                    <li class="article-list__item">
-                        <a href="#" class="article-list__link">
-                            <div class="text">
-                                <p class="date"><time datetime="2024-06-04">June 4, 2024</time></p>
-                                <p class="title">Connecting your car beyond the dashboard</p>
-                            </div>
-                            <img class="image" src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Open_sourcAndOS_01_exp_HERO_Her.max-300x300.format-webp.webp" alt="Connected car technology" loading="lazy" width="300" height="300">
-                        </a>
-                    </li>
-                </ul>
+            <section id="article-feed" class="article-feed" aria-label="Recommended articles">
+                <h2 class="article-list__title" id="article-feed-title">Recommended</h2>
+                <ul class="article-list__feed" id="article-feed-list"></ul>
             </section>
         </main>
     </body>
