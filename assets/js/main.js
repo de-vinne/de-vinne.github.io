@@ -266,13 +266,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 try {
                     let response = await fetch(articleUrl, {
-                        cache: 'no-store',
-                        method: 'HEAD'
+                        cache: 'no-store'
                     });
-
-                    if (!response.ok && response.status === 405) {
-                        response = await fetch(articleUrl, { cache: 'no-store' });
-                    }
 
                     if (response.ok) {
                         discoveredUrls.push(articleUrl);
