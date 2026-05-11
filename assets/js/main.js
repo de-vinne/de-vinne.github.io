@@ -156,100 +156,232 @@ document.addEventListener('DOMContentLoaded', () => {
     const articleFeedList = document.getElementById('article-feed-list');
     const categoryNavLinks = Array.from(nav.querySelectorAll('.nav__link[data-category]'));
 
-    const recommendedArticles = [
-        {
-            title: '5 new features for Android XR',
-            dateTime: '2024-06-06',
-            dateLabel: 'June 6, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Final_Hero_Image.max-300x300.format-webp.webp',
-            imageAlt: 'Android XR features illustration',
-            href: '#'
-        },
-        {
-            title: '3 new Gemini features are coming to Google TV',
-            dateTime: '2024-06-05',
-            dateLabel: 'June 5, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/updated_blog_hero_image__1.max-300x300.format-webp.webp',
-            imageAlt: 'Gemini features on Google TV',
-            href: '#'
-        },
-        {
-            title: 'Connecting your car beyond the dashboard',
-            dateTime: '2024-06-04',
-            dateLabel: 'June 4, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Open_sourcAndOS_01_exp_HERO_Her.max-300x300.format-webp.webp',
-            imageAlt: 'Connected car technology',
-            href: '#'
-        }
-    ];
+    const articleCollectionLabels = {
+        recommended: 'Recommended',
+        trending: 'Trending',
+        latest: 'Latest'
+    };
 
-    const trendingArticles = [
-        {
-            title: 'How AI Overviews are changing everyday search',
-            dateTime: '2024-06-03',
-            dateLabel: 'June 3, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/io_social_share.width-1300.format-webp.webp',
-            imageAlt: 'AI search results on a phone',
-            href: '#'
-        },
-        {
-            title: 'The developer tools teams are sharing most this week',
-            dateTime: '2024-06-02',
-            dateLabel: 'June 2, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Gemini_1.5_Flash.width-1300.format-webp.webp',
-            imageAlt: 'Developer tooling highlights',
-            href: '#'
-        },
-        {
-            title: 'Why foldables are back at the center of hardware talk',
-            dateTime: '2024-06-01',
-            dateLabel: 'June 1, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/IO24_Recap_Blog_Hero.width-1300.format-webp.webp',
-            imageAlt: 'Foldable device photography',
-            href: '#'
-        }
-    ];
+    const createArticleCollections = (sourceCollections = {}) => Object.fromEntries(
+        Object.entries(articleCollectionLabels).map(([key, label]) => {
+            const collection = sourceCollections[key] || {};
+            return [
+                key,
+                {
+                    label: collection.label || label,
+                    articles: Array.isArray(collection.articles) ? collection.articles : []
+                }
+            ];
+        })
+    );
+    let articleCollections = createArticleCollections(window.DEVINNE_ARTICLES || {});
 
-    const latestArticles = [
-        {
-            title: 'Android 15 beta expands to more devices',
-            dateTime: '2024-06-07',
-            dateLabel: 'June 7, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/android15.width-1300.format-webp.webp',
-            imageAlt: 'Android 15 beta artwork',
-            href: '#'
-        },
-        {
-            title: 'A fresh look at productivity upgrades in Workspace',
-            dateTime: '2024-06-06',
-            dateLabel: 'June 6, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/workspace.width-1300.format-webp.webp',
-            imageAlt: 'Workspace productivity visual',
-            href: '#'
-        },
-        {
-            title: 'Security updates rolling out across Chrome this month',
-            dateTime: '2024-06-05',
-            dateLabel: 'June 5, 2024',
-            imageSrc: 'https://storage.googleapis.com/gweb-uniblog-publish-prod/images/chrome.width-1300.format-webp.webp',
-            imageAlt: 'Chrome security update artwork',
-            href: '#'
-        }
-    ];
+    const escapeHTML = (value) => String(value ?? '').replace(/[&<>"']/g, (character) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[character]);
 
-    const articleCollections = {
-        recommended: {
-            label: 'Recommended',
-            articles: recommendedArticles
-        },
-        trending: {
-            label: 'Trending',
-            articles: trendingArticles
-        },
-        latest: {
-            label: 'Latest',
-            articles: latestArticles
+    const formatDateLabel = (dateTime) => {
+        const date = new Date(`${dateTime}T00:00:00Z`);
+
+        if (Number.isNaN(date.getTime())) {
+            return dateTime;
         }
+
+        return new Intl.DateTimeFormat('en', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric',
+            timeZone: 'UTC'
+        }).format(date);
+    };
+
+    const toRelativeHref = (url) => {
+        const currentDirectory = new URL('.', window.location.href);
+        const articleDirectory = new URL('.', url);
+
+        if (articleDirectory.href.startsWith(currentDirectory.href)) {
+            return articleDirectory.href.slice(currentDirectory.href.length);
+        }
+
+        return articleDirectory.pathname;
+    };
+
+    const extractArticleMeta = (html) => {
+        const documentFragment = new DOMParser().parseFromString(html, 'text/html');
+        const metaScript = documentFragment.getElementById('article-meta');
+
+        if (!metaScript) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(metaScript.textContent.trim());
+        } catch (error) {
+            console.warn('Skipping article with invalid article-meta JSON.', error);
+            return null;
+        }
+    };
+
+    const fetchArticle = async (url) => {
+        const response = await fetch(url, { cache: 'no-store' });
+
+        if (!response.ok) {
+            return null;
+        }
+
+        const meta = extractArticleMeta(await response.text());
+
+        if (!meta || !meta.title || !meta.dateTime) {
+            return null;
+        }
+
+        return {
+            title: String(meta.title),
+            dateTime: String(meta.dateTime),
+            dateLabel: meta.dateLabel ? String(meta.dateLabel) : formatDateLabel(meta.dateTime),
+            imageSrc: meta.imageSrc ? String(meta.imageSrc) : '',
+            imageAlt: meta.imageAlt ? String(meta.imageAlt) : String(meta.title),
+            href: meta.href ? String(meta.href) : toRelativeHref(url),
+            groups: Array.isArray(meta.groups)
+                ? meta.groups.map((group) => String(group).trim().toLowerCase()).filter(Boolean)
+                : []
+        };
+    };
+
+    const discoverNumberedArticleUrls = async () => {
+        const maxArticlesToProbe = 200;
+        const maxConsecutiveMisses = 12;
+        const numberedArticleRoots = ['blogs', 'blog'];
+        const discoveredUrls = [];
+
+        for (const articleRoot of numberedArticleRoots) {
+            let consecutiveMisses = 0;
+
+            for (let articleIndex = 1; articleIndex <= maxArticlesToProbe; articleIndex += 1) {
+                const articleUrl = new URL(`${articleRoot}/${articleIndex}/index.html`, window.location.href);
+
+                try {
+                    let response = await fetch(articleUrl, {
+                        cache: 'no-store',
+                        method: 'HEAD'
+                    });
+
+                    if (!response.ok && response.status === 405) {
+                        response = await fetch(articleUrl, { cache: 'no-store' });
+                    }
+
+                    if (response.ok) {
+                        discoveredUrls.push(articleUrl);
+                        consecutiveMisses = 0;
+                        continue;
+                    }
+                } catch (error) {
+                    console.warn('Article probe failed.', error);
+                }
+
+                consecutiveMisses += 1;
+
+                if (consecutiveMisses >= maxConsecutiveMisses) {
+                    break;
+                }
+            }
+        }
+
+        return Array.from(new Map(discoveredUrls.map((url) => [url.href, url])).values());
+    };
+
+    const discoverArticleUrls = async () => {
+        const blogIndexUrls = ['blogs/', 'blog/'].map((folder) => new URL(folder, window.location.href));
+        const discoveredUrls = [];
+
+        await Promise.all(blogIndexUrls.map(async (blogIndexUrl) => {
+            try {
+                const response = await fetch(blogIndexUrl, { cache: 'no-store' });
+
+                if (!response.ok) {
+                    return;
+                }
+
+                const directoryDocument = new DOMParser().parseFromString(await response.text(), 'text/html');
+                const articleUrls = Array.from(directoryDocument.querySelectorAll('a[href]'))
+                    .map((link) => new URL(link.getAttribute('href'), blogIndexUrl))
+                    .filter((url) => url.origin === window.location.origin)
+                    .filter((url) => url.pathname.startsWith(blogIndexUrl.pathname))
+                    .map((url) => {
+                        if (url.pathname.endsWith('/')) {
+                            return new URL('index.html', url);
+                        }
+
+                        return url;
+                    })
+                    .filter((url) => url.pathname.toLowerCase().endsWith('/index.html'))
+                    .filter((url) => url.pathname !== blogIndexUrl.pathname);
+
+                discoveredUrls.push(...articleUrls);
+            } catch (error) {
+                console.warn(`Skipping index fetch for ${blogIndexUrl.href}`, error);
+            }
+        }));
+
+        const directoryUrls = Array.from(new Map(discoveredUrls.map((url) => [url.href, url])).values());
+
+        if (directoryUrls.length > 0) {
+            return directoryUrls;
+        }
+
+        return discoverNumberedArticleUrls();
+    };
+
+    const buildArticleCollections = (articles) => {
+        const sortedArticles = articles
+            .filter(Boolean)
+            .sort((articleA, articleB) => {
+                const dateDifference = new Date(articleB.dateTime).getTime() - new Date(articleA.dateTime).getTime();
+
+                if (dateDifference !== 0) {
+                    return dateDifference;
+                }
+
+                return articleA.title.localeCompare(articleB.title);
+            });
+
+        const publicArticle = ({ groups, ...article }) => article;
+
+        return createArticleCollections({
+            recommended: {
+                articles: sortedArticles
+                    .filter((article) => article.groups.includes('recommended'))
+                    .map(publicArticle)
+            },
+            trending: {
+                articles: sortedArticles
+                    .filter((article) => article.groups.includes('trending'))
+                    .map(publicArticle)
+            },
+            latest: {
+                articles: sortedArticles.map(publicArticle)
+            }
+        });
+    };
+
+    const loadArticleCollections = async () => {
+        try {
+            const articleUrls = await discoverArticleUrls();
+            const discoveredArticles = await Promise.all(articleUrls.map(fetchArticle));
+            const discoveredCollections = buildArticleCollections(discoveredArticles);
+
+            if (discoveredCollections.latest.articles.length > 0) {
+                articleCollections = discoveredCollections;
+            }
+        } catch (error) {
+            console.warn('Article feed could not read the blog directory.', error);
+        }
+
+        renderArticleFeed(getInitialCategory(), { updateHash: false });
     };
 
     const getInitialCategory = () => {
@@ -269,17 +401,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         articleFeedSection.setAttribute('aria-label', `${selectedCollection.label} articles`);
         articleFeedTitle.textContent = selectedCollection.label;
-        articleFeedList.innerHTML = selectedCollection.articles.map((article) => `
+
+        if (selectedCollection.articles.length === 0) {
+            articleFeedList.innerHTML = `
+                <li class="article-list__item article-list__item--empty">
+                    <p class="title">No articles yet.</p>
+                </li>
+            `;
+        } else {
+            articleFeedList.innerHTML = selectedCollection.articles.map((article) => `
             <li class="article-list__item">
-                <a href="${article.href}" class="article-list__link">
+                <a href="${escapeHTML(article.href)}" class="article-list__link">
                     <div class="text">
-                        <p class="date"><time datetime="${article.dateTime}">${article.dateLabel}</time></p>
-                        <p class="title">${article.title}</p>
+                        <p class="date"><time datetime="${escapeHTML(article.dateTime)}">${escapeHTML(article.dateLabel)}</time></p>
+                        <p class="title">${escapeHTML(article.title)}</p>
                     </div>
-                    <img class="image" src="${article.imageSrc}" alt="${article.imageAlt}" loading="lazy" width="300" height="300">
+                    <img class="image" src="${escapeHTML(article.imageSrc)}" alt="${escapeHTML(article.imageAlt)}" loading="lazy" width="300" height="300">
                 </a>
             </li>
-        `).join('');
+            `).join('');
+        }
 
         categoryNavLinks.forEach((link) => {
             const isActive = link.dataset.category === categoryKey;
@@ -308,6 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     renderArticleFeed(getInitialCategory(), { updateHash: false });
+    loadArticleCollections();
 
     // ── Subscribe overlay logic ────────────────────────
     const overlay = document.getElementById('subscribe-overlay');
@@ -391,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
             showStep(stepVerify);
             verifyCodeField?.focus();
             
-            alert(`[演示提示] 验证码已“发送”到您的邮箱。\n请在浏览器控制台 (F12) 查看模拟邮件内容。\n(验证码是: ${currentVerificationCode})`);
+            alert(`[Demo Notice] The verification code has been "sent" to your email.\nPlease check the simulated email content in the browser console (F12).\n(Verification code: ${currentVerificationCode})`);
         }, 1200);
     });
 
