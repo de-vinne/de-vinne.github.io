@@ -105,6 +105,29 @@ body {
     fill: #5f6368;
 }
 
+.header .top .feedback-toggle {
+    display: inline-flex;
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 999px;
+    background-color: transparent;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    cursor: pointer;
+}
+
+.header .top .feedback-toggle:hover {
+    background-color: #f0f4f9;
+}
+
+.header .top .feedback-toggle__icon {
+    width: 22px;
+    height: 22px;
+    fill: #5f6368;
+}
+
 .header .top .subscribe-toggle {
     display: inline-flex;
     width: 36px;
@@ -193,12 +216,17 @@ body {
 }
 
 .header .top .search-box .back-icon {
+    outline: none;
     display: none;
     width: 20px;
     height: 20px;
     flex: 0 0 20px;
     fill: #5f6368;
     cursor: pointer;
+}
+
+.header .top .search-box .back-icon:active {
+    background-color: rgba(60, 64, 67, 0.08);
 }
 
 .header .top .search-narrow-toggle {
@@ -295,6 +323,7 @@ body {
         flex: 0 0 auto;
         margin-left: auto;
         transform: none;
+        gap: 24px;
     }
 
     .header .top .search {
@@ -322,7 +351,7 @@ body {
 }
 
 .header .nav .nav__link {
-    margin: 8px 0 0;
+    margin: 18px 0 0;
     font-family: 'Google Sans Flex';
     font-size: 16px;
     font-weight: 400;
@@ -330,7 +359,6 @@ body {
     color: #606060;
     text-decoration: none;
     border-bottom: 2px solid transparent;
-    padding-bottom: 8px;
     transition: color 0.15s ease, border-color 0.15s ease;
 }
 
@@ -453,10 +481,6 @@ body {
 
     .header {
         height: calc(var(--header-top-height) + var(--header-nav-height) - var(--top-collapse));
-    }
-
-    .header .top {
-        /* No grid needed, flex handles it */
     }
 
     .header .top .action {
@@ -623,6 +647,17 @@ body {
     --md-outlined-text-field-container-shape: 4px;
     --md-outlined-text-field-top-space: 12px;
     --md-outlined-text-field-bottom-space: 12px;
+}
+
+.subscribe-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 24px;
+}
+
+.subscribe-modal__actions .icon-button:hover {
+    color: #202124 !important;
 }
 
 .subscribe-modal__actions {
