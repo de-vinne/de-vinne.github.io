@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const fetchArticle = async (url) => {
-        const response = await fetch(url, { cache: 'no-store' });
+        const response = await fetch(url);
 
         if (!response.ok) {
             return null;
@@ -265,9 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const articleUrl = new URL(`${articleRoot}/${articleIndex}/index.html`, window.location.href);
 
                 try {
-                    let response = await fetch(articleUrl, {
-                        cache: 'no-store'
-                    });
+                    let response = await fetch(articleUrl);
 
                     if (response.ok) {
                         discoveredUrls.push(articleUrl);
@@ -295,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         await Promise.all(blogIndexUrls.map(async (blogIndexUrl) => {
             try {
-                const response = await fetch(blogIndexUrl, { cache: 'no-store' });
+                const response = await fetch(blogIndexUrl);
 
                 if (!response.ok) {
                     return;
@@ -400,7 +398,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (selectedCollection.articles.length === 0) {
             articleFeedList.innerHTML = `
                 <li class="article-list__item article-list__item--empty">
-                    <p class="title">No articles yet.</p>
+                    <p class="title">Please wait for seconds...</p>
                 </li>
             `;
         } else {
@@ -449,6 +447,30 @@ document.addEventListener('DOMContentLoaded', () => {
     // ── Subscribe overlay logic ────────────────────────
     const overlay = document.getElementById('subscribe-overlay');
     const subscribeBtn = document.getElementById('subscribe-btn');
+    
+    // Feedback logic
+    const feedbackOverlay = document.getElementById('feedback-overlay');
+    const feedbackBtn = document.getElementById('feedback-btn');
+    const feedbackCloseBtn = document.getElementById('feedback-close');
+
+    const openFeedback = () => {
+        feedbackOverlay?.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    };
+
+    const closeFeedback = () => {
+        feedbackOverlay?.classList.remove('open');
+        document.body.style.overflow = '';
+    };
+
+    feedbackBtn?.addEventListener('click', openFeedback);
+    feedbackCloseBtn?.addEventListener('click', closeFeedback);
+
+    feedbackOverlay?.addEventListener('click', (e) => {
+        if (e.target === feedbackOverlay) {
+            closeFeedback();
+        }
+    });
     
     // Steps
     const stepEmail = document.getElementById('step-email');
