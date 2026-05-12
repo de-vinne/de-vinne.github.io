@@ -41,7 +41,7 @@
                     <button class="search-toggle" id="search-toggle-btn" type="button" aria-label="Open search" aria-expanded="false">
                         <svg class="search-toggle__icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
                     </button>
-                    <form class="search" role="search" aria-label="Site search">
+                    <form class="search" role="search" aria-label="Site search" title="Search">
                         <div class="search-box">
                             <svg class="search-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
                             <svg class="back-icon" focusable="false" aria-hidden="true" role="button" tabindex="0" viewBox="0 0 24 24" aria-label="Close search"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
@@ -65,7 +65,10 @@
                             </ul>
                         </div>
                     </form>
-                    <button class="subscribe-toggle" id="subscribe-btn" type="button" aria-label="Subscribe" aria-haspopup="dialog">
+                    <button class="feedback-toggle" id="feedback-btn" type="button" aria-label="Feedback and Contribute" aria-haspopup="dialog" title="Feedback & Contribute">
+                        <svg class="feedback-toggle__icon" focusable="false" aria-hidden="true" viewBox="0 -960 960 960"><path d="M480-360q17 0 28.5-11.5T520-400q0-17-11.5-28.5T480-440q-17 0-28.5 11.5T440-400q0 17 11.5 28.5T480-360Zm-40-160h80v-240h-80v240ZM80-80v-720q0-33 23.5-56.5T160-880h640q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H240L80-80Zm126-240h594v-480H160v525l46-45Zm-46 0v-480 480Z"/></svg>
+                    </button>
+                    <button class="subscribe-toggle" id="subscribe-btn" type="button" aria-label="Subscribe" aria-haspopup="dialog" title="Subscribe">
                         <svg class="subscribe-toggle__icon" focusable="false" aria-hidden="true" viewBox="0 -960 960 960"><path d="M160-80q-33 0-56.5-23.5T80-160v-400q0-33 23.5-56.5T160-640h640q33 0 56.5 23.5T880-560v400q0 33-23.5 56.5T800-80H160Zm0-80h640v-400H160v400Zm240-40 240-160-240-160v320ZM160-680v-80h640v80H160Zm120-120v-80h400v80H280ZM160-160v-400 400Z"/></svg>
                     </button>
                 </div>
@@ -77,6 +80,10 @@
                     <!-- Step 1: Email Entry -->
                     <div class="subscribe-step" id="step-email">
                         <h2 class="subscribe-modal__title" id="subscribe-title">Subscribe to <span class="branding">De Vinne</span></h2>
+                        <a href="https://github.com/de-vinne" target="_blank" style="font-family: 'Google Sans Text', sans-serif; font-size: 14px; display: inline-flex; align-items: center; gap: 4px; text-decoration: none; color: inherit; margin-bottom: 8px;">
+                            <svg viewBox="0 0 24 24" aria-hidden="true" style="width: 1.2em; height: 1.2em; margin-right: 8px;"><path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg>
+                            Follow me on GitHub
+                        </a>
                         <p class="subscribe-modal__subtitle">Get the latest stories delivered straight to your inbox.</p>
                         <md-outlined-text-field
                             id="subscribe-email"
@@ -120,6 +127,31 @@
                         <p class="subscribe-modal__subtitle">Thank you for subscribing. You'll start receiving our curated stories soon.</p>
                         <div class="subscribe-modal__actions">
                             <md-filled-button id="success-close">Done</md-filled-button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feedback dialog -->
+            <div class="subscribe-overlay" id="feedback-overlay" role="dialog" aria-modal="true" aria-labelledby="feedback-title" aria-hidden="true">
+                <div class="subscribe-modal" style="padding-bottom: 16px;">
+                    <div class="subscribe-step">
+                        <h2 class="subscribe-modal__title" id="feedback-title">Feedback & Contribute</h2>
+                        <p class="subscribe-modal__subtitle" style="margin-bottom: 24px;">
+                            If you have any suggestions, found a bug, or would like to contribute, just reach out to me at
+                            <br><br>
+                            <span style="display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px;">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Gmail_icon_%282020%29.svg/960px-Gmail_icon_%282020%29.svg.png" alt="Gmail" height="14" style="object-fit: contain;">
+                                <a href="mailto:vinne704@gmail.com" style="color: #000000; text-decoration: none; user-select: all;">vinne704@gmail.com</a>
+                            </span>
+                            <br>
+                            and I will reply to your email as soon as possible, within one week.
+                        </p>
+                        <div class="subscribe-modal__actions">
+                            <button id="feedback-close" type="button" class="icon-button" aria-label="Close" style="display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 16px; border: none; border-radius: 8px; background-color: transparent; font-family: 'Google Sans Text', sans-serif; font-size: 16px; font-weight: 500; color: #5f6368; cursor: pointer; transition: color 0.2s ease;">
+                                <svg focusable="false" aria-hidden="true" viewBox="0 0 24 24" style="height: 17px; fill: currentColor;"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                                Close
+                            </button>
                         </div>
                     </div>
                 </div>
